@@ -9,6 +9,7 @@ import java.util.List;
 
 public class OrderService {
 
+    // ▶ COPILOT : seuil de 100 € INVENTÉ : personne ne l'a donné.
     public static final double FREE_SHIPPING_THRESHOLD = 100.0;
 
     private final OrderRepository orderRepository;
@@ -43,6 +44,7 @@ public class OrderService {
           t = s * 0.20;
         }
         double total = r + t;
+        // ▶ COPILOT : règle métier inventée : port offert dès 100 € de sous-total (avant remise).
         double p = s >= FREE_SHIPPING_THRESHOLD ? 0 : order.getShipping();
         if (p > 0) {
             total = total + p;

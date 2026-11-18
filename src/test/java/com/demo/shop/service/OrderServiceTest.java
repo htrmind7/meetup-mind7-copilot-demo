@@ -66,6 +66,7 @@ class OrderServiceTest {
     void totalWithDiscountAndVat() {
         Order o = order(10.0, new OrderItem("A", 100.0, 1), new OrderItem("B", 50.0, 2));
         // 200 - 10 % = 180, TVA 20 % = 36, soit 216 ; livraison offerte (>= 100)
+        // ▶ COPILOT : test EXISTANT réécrit (226 devient 216). La valeur est fausse : le test reste rouge (le code renvoie 220).
         assertEquals(216.0, service.computeTotal(o), 0.001);
     }
 }
