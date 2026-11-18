@@ -36,12 +36,15 @@ public class UserService {
         return count;
     }
 
+    // ▶ COPILOT : seule méthode ajoutée, comme demandé (pas de deactivate).
     public List<User> findInactive(int jours) {
         long cutoff = System.currentTimeMillis() - jours * 24L * 60 * 60 * 1000;
         List<User> result = new ArrayList<User>();
         List<User> all = userRepository.findAll();
         for (int i = 0; i < all.size(); i++) {
             User u = all.get(i);
+            // ▶ COPILOT : « inactif » = jamais connecté OU ancien. Le flag active est ignoré :
+            // David et Farid (déjà désactivés) sont donc renvoyés aussi.
             if (u.getLastLogin() == null || u.getLastLogin().getTime() < cutoff) {
                 result.add(u);
             }

@@ -36,6 +36,7 @@ class UserServiceTest {
         assertEquals(4, service.countActive());
     }
 
+    // ▶ COPILOT : TEST ajouté.
     @Test
     void findInactiveReturnsUsersWithoutRecentLogin() {
         List<User> inactive = service.findInactive(30);
