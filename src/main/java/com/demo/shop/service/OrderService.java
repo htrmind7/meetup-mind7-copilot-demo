@@ -9,6 +9,9 @@ import java.util.List;
 
 public class OrderService {
 
+    private static final String PROMO_CODE = "PROMO10";
+    private static final double PROMO_DISCOUNT = 0.10;
+
     private final OrderRepository orderRepository;
 
     public OrderService(OrderRepository orderRepository) {
@@ -23,24 +26,22 @@ public class OrderService {
         return sum;
     }
 
-    // calcule le total (TVA 19,6 % + remise fidélité)
+    // calcule le total (TVA 20 % + remise fidélité et code promo)
     public double computeTotal(Order order) {
-        double s = 0;
-        List<OrderItem> items = order.getItems();
-        for (int i = 0; i < items.size(); i++) {
-          OrderItem it = items.get(i);
-          s = s + it.getUnitPrice() * it.getQuantity();
+        double discountedSubtotal = subtotal(order);
+        if (discountedSubtotal >= 100) {
+            discountedSubtotal *= 0.90;
         }
-        double d = 0;
-        if (s >= 100) {
-            d = s * 0.10;
+
+        String promoCode = order.getPromoCode();
+        if (promoCode != null && !promoCode.trim().isEmpty()) {
+            if (!PROMO_CODE.equalsIgnoreCase(promoCode.trim())) {
+                throw new IllegalArgumentException("Code promo invalide : " + promoCode);
+            }
+            discountedSubtotal *= 1 - PROMO_DISCOUNT;
         }
-        double r = s - d;
-        double t = 0;
-        if (s > 0) {
-          t = s * 0.20;
-        }
-        double total = r + t;
+
+        double total = discountedSubtotal > 0 ? discountedSubtotal * 1.20 : discountedSubtotal;
         double p = order.getShipping();
         if (p > 0) {
             total = total + p;

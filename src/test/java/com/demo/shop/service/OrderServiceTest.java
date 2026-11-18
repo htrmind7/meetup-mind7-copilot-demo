@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OrderServiceTest {
 
@@ -53,5 +54,20 @@ class OrderServiceTest {
         Order o = order(10.0, new OrderItem("A", 100.0, 1), new OrderItem("B", 50.0, 2));
         // 200 - 10 % = 180, TVA 20 % = 36, soit 216, + port 10 = 226
         assertEquals(226.0, service.computeTotal(o), 0.001);
+    }
+
+    @Test
+    void promoCodeAppliesTenPercentBeforeVat() {
+        Order o = order(0, new OrderItem("A", 50.0, 1));
+        o.setPromoCode(" promo10 ");
+        // 50 - 10 % = 45, TVA 20 % = 9
+        assertEquals(54.0, service.computeTotal(o), 0.001);
+    }
+
+    @Test
+    void unknownPromoCodeIsRejected() {
+        Order o = order(0, new OrderItem("A", 50.0, 1));
+        o.setPromoCode("UNKNOWN");
+        assertThrows(IllegalArgumentException.class, () -> service.computeTotal(o));
     }
 }

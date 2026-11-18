@@ -19,6 +19,7 @@ public class Main {
         items.add(new OrderItem("Keyboard", 80.0, 1));
         items.add(new OrderItem("Mouse", 60.0, 2));
         Order order = new Order(1, 1, items, 10.0);
+        order.setPromoCode("PROMO10");
 
         OrderService orderService = new OrderService(new OrderRepository());
         System.out.println("Order total: " + orderService.computeTotal(order));

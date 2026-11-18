@@ -9,6 +9,7 @@ public class Order {
     private long userId;
     private List<OrderItem> items;
     private double shipping;
+    private String promoCode;
 
     public Order(long id, long userId, List<OrderItem> items, double shipping) {
         this.id = id;
@@ -47,5 +48,13 @@ public class Order {
 
     public void setShipping(double shipping) {
         this.shipping = shipping;
+    }
+
+    public String getPromoCode() {
+        return promoCode;
+    }
+
+    public void setPromoCode(String promoCode) {
+        this.promoCode = promoCode;
     }
 }
