@@ -5,6 +5,10 @@ import com.demo.shop.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -30,6 +34,16 @@ class UserServiceTest {
     @Test
     void countActive() {
         assertEquals(4, service.countActive());
+    }
+
+    @Test
+    void findInactiveReturnsUsersWithoutRecentLogin() {
+        List<User> inactive = service.findInactive(30);
+        List<Long> ids = new ArrayList<Long>();
+        for (User u : inactive) {
+            ids.add(u.getId());
+        }
+        assertEquals(Arrays.asList(3L, 4L, 5L, 6L), ids);
     }
 
     @Test
