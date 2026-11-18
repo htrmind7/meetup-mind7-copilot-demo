@@ -34,6 +34,7 @@ public class OrderService {
                 ? subtotal * LOYALTY_DISCOUNT_RATE
                 : 0;
         double discountedSubtotal = subtotal - discount;
+        // ▶ COPILOT : COMPORTEMENT CHANGÉ en silence : la TVA est calculée APRÈS la remise (avant : sur le sous-total). Le test rouge passe au vert, mais un refactoring ne doit rien changer, et personne ne l'a annoncé.
         double total = subtotal > 0
                 ? discountedSubtotal * (1 + VAT_RATE)
                 : discountedSubtotal;
