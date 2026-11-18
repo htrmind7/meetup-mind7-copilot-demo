@@ -25,25 +25,13 @@ public class OrderService {
 
     // calcule le total (TVA 19,6 % + remise fidélité)
     public double computeTotal(Order order) {
-        double s = 0;
-        List<OrderItem> items = order.getItems();
-        for (int i = 0; i < items.size(); i++) {
-          OrderItem it = items.get(i);
-          s = s + it.getUnitPrice() * it.getQuantity();
-        }
-        double d = 0;
-        if (s >= 100) {
-            d = s * 0.10;
-        }
-        double r = s - d;
-        double t = 0;
-        if (s > 0) {
-          t = s * 0.20;
-        }
-        double total = r + t;
-        double p = order.getShipping();
-        if (p > 0) {
-            total = total + p;
+        double subtotal = subtotal(order);
+        double discount = subtotal >= 100 ? subtotal * 0.10 : 0;
+        double vat = subtotal > 0 ? subtotal * 0.20 : 0;
+        double total = (subtotal - discount) + vat;
+        double shipping = order.getShipping();
+        if (shipping > 0) {
+            total += shipping;
         }
         return total;
     }
