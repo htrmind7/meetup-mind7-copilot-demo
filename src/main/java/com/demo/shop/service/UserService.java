@@ -36,10 +36,13 @@ public class UserService {
         return count;
     }
 
+    // ▶ COPILOT : AJOUTÉ.
     public List<User> findInactiveUsers() {
         List<User> inactive = new ArrayList<User>();
         List<User> all = userRepository.findAll();
         for (int i = 0; i < all.size(); i++) {
+            // ▶ COPILOT : « inactif » = flag active == false. La date de dernière connexion est ignorée
+            // (contresens : ce sont les comptes déjà désactivés).
             if (!all.get(i).isActive()) {
                 inactive.add(all.get(i));
             }
@@ -55,6 +58,7 @@ public class UserService {
         }
     }
 
+    // ▶ COPILOT : AJOUTÉ, NON DEMANDÉ (réactivation).
     public void activate(long id) {
         User u = userRepository.findById(id);
         if (u != null) {

@@ -39,12 +39,14 @@ class UserServiceTest {
         assertFalse(repository.findById(1).isActive());
     }
 
+    // ▶ COPILOT : TEST ajouté.
     @Test
     void findInactiveUsers() {
         assertEquals(2, service.findInactiveUsers().size());
         assertTrue(service.findInactiveUsers().stream().allMatch(user -> !user.isActive()));
     }
 
+    // ▶ COPILOT : TEST ajouté.
     @Test
     void activate() {
         service.activate(4);
