@@ -32,6 +32,7 @@ class UserServiceTest {
         assertEquals(4, service.countActive());
     }
 
+    // ▶ COPILOT : TEST ajouté.
     @Test
     void findInactive() {
         assertEquals(4, service.findInactive(30).size());

@@ -37,6 +37,7 @@ public class UserService {
         return count;
     }
 
+    // ▶ COPILOT : seule méthode ajoutée, comme demandé (pas de deactivate).
     public List<User> findInactive(int jours) {
         long cutoff = System.currentTimeMillis() - jours * 24L * 60 * 60 * 1000;
         List<User> inactive = new ArrayList<User>();
