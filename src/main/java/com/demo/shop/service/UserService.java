@@ -44,6 +44,8 @@ public class UserService {
         List<User> all = userRepository.findAll();
         for (int i = 0; i < all.size(); i++) {
             Date lastLogin = all.get(i).getLastLogin();
+            // ▶ COPILOT : « inactif » = jamais connecté OU ancien. Le flag active est ignoré :
+            // David et Farid (déjà désactivés) sont donc renvoyés aussi.
             if (lastLogin == null || lastLogin.getTime() <= cutoff) {
                 inactive.add(all.get(i));
             }
