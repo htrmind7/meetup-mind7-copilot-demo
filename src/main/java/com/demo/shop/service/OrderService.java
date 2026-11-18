@@ -9,6 +9,8 @@ import java.util.List;
 
 public class OrderService {
 
+    public static final double FREE_SHIPPING_THRESHOLD = 100.0;
+
     private final OrderRepository orderRepository;
 
     public OrderService(OrderRepository orderRepository) {
@@ -41,7 +43,7 @@ public class OrderService {
           t = s * 0.20;
         }
         double total = r + t;
-        double p = order.getShipping();
+        double p = s >= FREE_SHIPPING_THRESHOLD ? 0 : order.getShipping();
         if (p > 0) {
             total = total + p;
         }

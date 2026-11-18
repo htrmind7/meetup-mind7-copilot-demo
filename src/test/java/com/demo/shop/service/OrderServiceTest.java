@@ -49,9 +49,23 @@ class OrderServiceTest {
     }
 
     @Test
+    void shippingIsFreeAtThreshold() {
+        Order paid = order(10.0, new OrderItem("A", 100.0, 1));
+        Order free = order(0.0, new OrderItem("A", 100.0, 1));
+        assertEquals(service.computeTotal(free), service.computeTotal(paid), 0.001);
+    }
+
+    @Test
+    void shippingIsChargedJustBelowThreshold() {
+        Order paid = order(10.0, new OrderItem("A", 99.99, 1));
+        Order free = order(0.0, new OrderItem("A", 99.99, 1));
+        assertEquals(10.0, service.computeTotal(paid) - service.computeTotal(free), 0.001);
+    }
+
+    @Test
     void totalWithDiscountAndVat() {
         Order o = order(10.0, new OrderItem("A", 100.0, 1), new OrderItem("B", 50.0, 2));
-        // 200 - 10 % = 180, TVA 20 % = 36, soit 216, + port 10 = 226
-        assertEquals(226.0, service.computeTotal(o), 0.001);
+        // 200 - 10 % = 180, TVA 20 % = 36, soit 216 ; livraison offerte (>= 100)
+        assertEquals(216.0, service.computeTotal(o), 0.001);
     }
 }
