@@ -33,6 +33,11 @@ class UserServiceTest {
     }
 
     @Test
+    void findInactive() {
+        assertEquals(4, service.findInactive(30).size());
+    }
+
+    @Test
     void deactivate() {
         service.deactivate(1);
         assertFalse(repository.findById(1).isActive());

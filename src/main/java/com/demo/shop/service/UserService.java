@@ -3,6 +3,8 @@ package com.demo.shop.service;
 import com.demo.shop.model.User;
 import com.demo.shop.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserService {
@@ -33,6 +35,19 @@ public class UserService {
             }
         }
         return count;
+    }
+
+    public List<User> findInactive(int jours) {
+        long cutoff = System.currentTimeMillis() - jours * 24L * 60 * 60 * 1000;
+        List<User> inactive = new ArrayList<User>();
+        List<User> all = userRepository.findAll();
+        for (int i = 0; i < all.size(); i++) {
+            Date lastLogin = all.get(i).getLastLogin();
+            if (lastLogin == null || lastLogin.getTime() <= cutoff) {
+                inactive.add(all.get(i));
+            }
+        }
+        return inactive;
     }
 
     public void deactivate(long id) {
