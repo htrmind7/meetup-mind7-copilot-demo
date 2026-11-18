@@ -8,6 +8,7 @@ import java.util.List;
 
 public class UserService {
 
+    // ▶ COPILOT : constante ajoutée (non demandée).
     private static final long DAY_MS = 24L * 60 * 60 * 1000;
 
     private final UserRepository userRepository;
@@ -46,6 +47,7 @@ public class UserService {
         }
     }
 
+    // ▶ COPILOT : AJOUTÉ. Le « maintenant » est un paramètre (testable) ou calculé en interne selon le run.
     /**
      * Retourne les utilisateurs sans connexion depuis plus de {@code days} jours.
      * Un utilisateur qui ne s'est jamais connecté (lastLogin null) est considéré comme inactif.
@@ -56,6 +58,7 @@ public class UserService {
         List<User> all = userRepository.findAll();
         for (int i = 0; i < all.size(); i++) {
             User u = all.get(i);
+            // ▶ COPILOT : « inactif » = jamais connecté OU connexion > N jours (flag active non testé ici).
             if (u.getLastLogin() == null || u.getLastLogin().getTime() < threshold) {
                 result.add(u);
             }
@@ -63,6 +66,7 @@ public class UserService {
         return result;
     }
 
+    // ▶ COPILOT : AJOUTÉ, NON DEMANDÉ. Ne compte que les comptes encore actifs.
     /**
      * Désactive les utilisateurs actifs inactifs depuis plus de {@code days} jours.
      * @return le nombre d'utilisateurs désactivés

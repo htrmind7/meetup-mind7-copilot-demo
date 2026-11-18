@@ -41,6 +41,7 @@ class UserServiceTest {
         assertFalse(repository.findById(1).isActive());
     }
 
+    // ▶ COPILOT : TEST ajouté.
     @Test
     void findInactiveReturnsUsersWithoutRecentLoginOrNeverLoggedIn() {
         List<User> inactive = service.findInactive(30);
@@ -51,6 +52,7 @@ class UserServiceTest {
         assertEquals(6, inactive.get(3).getId());
     }
 
+    // ▶ COPILOT : TEST ajouté.
     @Test
     void deactivateInactiveOnlyDeactivatesActiveUsers() {
         int count = service.deactivateInactive(30);
