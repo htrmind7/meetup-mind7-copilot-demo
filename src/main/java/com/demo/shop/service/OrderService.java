@@ -9,6 +9,10 @@ import java.util.List;
 
 public class OrderService {
 
+    private static final double DISCOUNT_THRESHOLD = 100;
+    private static final double LOYALTY_DISCOUNT_RATE = 0.10;
+    private static final double VAT_RATE = 0.20;
+
     private final OrderRepository orderRepository;
 
     public OrderService(OrderRepository orderRepository) {
@@ -23,27 +27,19 @@ public class OrderService {
         return sum;
     }
 
-    // calcule le total (TVA 19,6 % + remise fidélité)
+    // Calcule le total (TVA 20 % + remise fidélité)
     public double computeTotal(Order order) {
-        double s = 0;
-        List<OrderItem> items = order.getItems();
-        for (int i = 0; i < items.size(); i++) {
-          OrderItem it = items.get(i);
-          s = s + it.getUnitPrice() * it.getQuantity();
-        }
-        double d = 0;
-        if (s >= 100) {
-            d = s * 0.10;
-        }
-        double r = s - d;
-        double t = 0;
-        if (s > 0) {
-          t = s * 0.20;
-        }
-        double total = r + t;
-        double p = order.getShipping();
-        if (p > 0) {
-            total = total + p;
+        double subtotal = subtotal(order);
+        double discount = subtotal >= DISCOUNT_THRESHOLD
+                ? subtotal * LOYALTY_DISCOUNT_RATE
+                : 0;
+        double discountedSubtotal = subtotal - discount;
+        double total = subtotal > 0
+                ? discountedSubtotal * (1 + VAT_RATE)
+                : discountedSubtotal;
+
+        if (order.getShipping() > 0) {
+            total += order.getShipping();
         }
         return total;
     }
