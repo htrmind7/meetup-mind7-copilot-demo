@@ -9,6 +9,7 @@ import java.util.List;
 
 public class OrderService {
 
+    // ▶ COPILOT : code promo INVENTÉ en dur : PROMO10, 10 %.
     private static final String PROMO_CODE = "PROMO10";
     private static final double PROMO_DISCOUNT = 0.10;
 
@@ -36,11 +37,13 @@ public class OrderService {
         String promoCode = order.getPromoCode();
         if (promoCode != null && !promoCode.trim().isEmpty()) {
             if (!PROMO_CODE.equalsIgnoreCase(promoCode.trim())) {
+                // ▶ COPILOT : décision non demandée : un code inconnu fait planter le calcul.
                 throw new IllegalArgumentException("Code promo invalide : " + promoCode);
             }
             discountedSubtotal *= 1 - PROMO_DISCOUNT;
         }
 
+        // ▶ COPILOT : COMPORTEMENT CHANGÉ en silence : TVA calculée APRÈS les remises. Le test rouge passe au vert sans qu'on l'ait demandé.
         double total = discountedSubtotal > 0 ? discountedSubtotal * 1.20 : discountedSubtotal;
         double p = order.getShipping();
         if (p > 0) {

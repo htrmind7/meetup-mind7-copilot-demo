@@ -9,6 +9,7 @@ public class Order {
     private long userId;
     private List<OrderItem> items;
     private double shipping;
+    // ▶ COPILOT : champ ajouté au modèle Order (non demandé). Main.java est modifié aussi.
     private String promoCode;
 
     public Order(long id, long userId, List<OrderItem> items, double shipping) {
