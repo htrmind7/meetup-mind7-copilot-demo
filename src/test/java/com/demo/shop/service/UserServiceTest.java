@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserServiceTest {
 
@@ -36,5 +37,18 @@ class UserServiceTest {
     void deactivate() {
         service.deactivate(1);
         assertFalse(repository.findById(1).isActive());
+    }
+
+    @Test
+    void findInactiveUsers() {
+        assertEquals(2, service.findInactiveUsers().size());
+        assertTrue(service.findInactiveUsers().stream().allMatch(user -> !user.isActive()));
+    }
+
+    @Test
+    void activate() {
+        service.activate(4);
+        assertTrue(repository.findById(4).isActive());
+        assertEquals(1, service.findInactiveUsers().size());
     }
 }
