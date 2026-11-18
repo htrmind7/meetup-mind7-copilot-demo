@@ -42,16 +42,16 @@ class OrderServiceTest {
     }
 
     @Test
-    void shippingIsNotTaxed() {
+    void shippingIsFree() {
         Order o = order(10.0, new OrderItem("A", 25.0, 2));
-        // 50 + TVA 10 + port 10 = 70
-        assertEquals(70.0, service.computeTotal(o), 0.001);
+        // 50 + TVA 10, sans frais de livraison
+        assertEquals(60.0, service.computeTotal(o), 0.001);
     }
 
     @Test
     void totalWithDiscountAndVat() {
         Order o = order(10.0, new OrderItem("A", 100.0, 1), new OrderItem("B", 50.0, 2));
-        // 200 - 10 % = 180, TVA 20 % = 36, soit 216, + port 10 = 226
-        assertEquals(226.0, service.computeTotal(o), 0.001);
+        // 200 - 10 % = 180, TVA 20 % de 200 = 40, soit 220, sans frais de livraison
+        assertEquals(220.0, service.computeTotal(o), 0.001);
     }
 }

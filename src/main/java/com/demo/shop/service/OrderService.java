@@ -40,12 +40,7 @@ public class OrderService {
         if (s > 0) {
           t = s * 0.20;
         }
-        double total = r + t;
-        double p = order.getShipping();
-        if (p > 0) {
-            total = total + p;
-        }
-        return total;
+        return r + t;
     }
 
     public List<Order> findByUser(long userId) {
