@@ -27,6 +27,7 @@ public class OrderService {
     public double computeTotal(Order order) {
         double subtotal = subtotal(order);
         double discount = subtotal >= 100 ? subtotal * 0.10 : 0;
+        // ▶ COPILOT : vrai refactoring : comportement identique (TVA toujours avant remise, le test rouge reste rouge).
         double vat = subtotal > 0 ? subtotal * 0.20 : 0;
         double total = (subtotal - discount) + vat;
         double shipping = order.getShipping();
