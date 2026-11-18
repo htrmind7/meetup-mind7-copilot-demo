@@ -17,6 +17,7 @@ public class OrderService {
 
     static {
         Map<String, Double> codes = new HashMap<String, Double>();
+        // ▶ COPILOT : code promo INVENTÉ et écrit en dur : BIENVENUE10, 10 %. Personne n'a donné de règle.
         codes.put("BIENVENUE10", 0.10);
         PROMO_CODES = Collections.unmodifiableMap(codes);
     }
@@ -41,6 +42,7 @@ public class OrderService {
     }
 
     // calcule le total avec un code promo optionnel (ignoré s'il est inconnu)
+    // ▶ COPILOT : nouvelle surcharge ; le test rouge existant reste rouge.
     public double computeTotal(Order order, String promoCode) {
         double s = 0;
         List<OrderItem> items = order.getItems();
@@ -54,6 +56,7 @@ public class OrderService {
         }
         Double promo = promoCode != null ? PROMO_CODES.get(promoCode.trim().toUpperCase()) : null;
         if (promo != null) {
+            // ▶ COPILOT : le code promo se CUMULE avec la remise fidélité : décision non demandée.
             d = d + s * promo;
         }
         double r = s - d;
