@@ -40,6 +40,7 @@ public class OrderService {
         if (s > 0) {
           t = s * 0.20;
         }
+        // ▶ COPILOT : « livraison gratuite » compris comme « plus jamais de frais de port » : plus aucun port, pour tout le monde.
         return r + t;
     }
 
