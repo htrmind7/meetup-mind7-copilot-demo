@@ -48,6 +48,14 @@ public class OrderService {
         return total;
     }
 
+    public double computeTotal(Order order, String promoCode) {
+        double total = computeTotal(order);
+        if ("PROMO10".equals(promoCode)) {
+            total -= subtotal(order) * 0.10;
+        }
+        return total;
+    }
+
     public List<Order> findByUser(long userId) {
         List<Order> result = new ArrayList<Order>();
         List<Order> all = orderRepository.findAll();
