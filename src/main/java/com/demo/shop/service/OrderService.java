@@ -48,6 +48,7 @@ public class OrderService {
         return total;
     }
 
+    // ▶ COPILOT : LA VERSION SIMPLE : 5 lignes, elle réutilise computeTotal(order) au lieu de le recopier. Test dans un fichier à part, les tests existants ne sont pas touchés.
     public double computeTotal(Order order, String promoCode) {
         double total = computeTotal(order);
         if ("PROMO10".equals(promoCode)) {

@@ -19,6 +19,7 @@ class OrderServicePromoTest {
         OrderService service = new OrderService(new OrderRepository());
 
         assertEquals(210.0, service.computeTotal(order, "PROMO10"), 0.001);
+        // ▶ COPILOT : attend 230 pour un code inconnu : ça fige le bug de TVA existant (l'autre test attend 226). Dans le test, pas dans le code.
         assertEquals(230.0, service.computeTotal(order, "UNKNOWN"), 0.001);
     }
 }
