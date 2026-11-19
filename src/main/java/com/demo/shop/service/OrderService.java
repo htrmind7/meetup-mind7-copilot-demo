@@ -49,6 +49,7 @@ public class OrderService {
     }
 
     // comme computeTotal(Order), avec en plus une remise de 10 % sur le sous-total si promoCode vaut "PROMO10"
+    // ▶ COPILOT : MOINS BIEN : recopie tout le corps de computeTotal(order) au lieu de l'appeler (duplication). Le prompt précis a supprimé la Map, la normalisation et les 4 tests, mais pas la copie.
     public double computeTotal(Order order, String promoCode) {
         double s = subtotal(order);
         double d = 0;
