@@ -54,4 +54,13 @@ class OrderServiceTest {
         // 200 - 10 % = 180, TVA 20 % = 36, soit 216, + port 10 = 226
         assertEquals(226.0, service.computeTotal(o), 0.001);
     }
+
+    @Test
+    void promoCodeAppliesTenPercentOnSubtotalOnlyForPromo10() {
+        Order o = order(10.0, new OrderItem("A", 100.0, 1), new OrderItem("B", 50.0, 2));
+        // PROMO10 : 200 - 10 % fidélité - 10 % promo = 160, TVA 40, + port 10 = 210
+        assertEquals(210.0, service.computeTotal(o, "PROMO10"), 0.001);
+        // code inconnu ignoré : même total que computeTotal(Order)
+        assertEquals(service.computeTotal(o), service.computeTotal(o, "FOO"), 0.001);
+    }
 }

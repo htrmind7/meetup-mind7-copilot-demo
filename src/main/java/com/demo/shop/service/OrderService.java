@@ -48,6 +48,30 @@ public class OrderService {
         return total;
     }
 
+    // comme computeTotal(Order), avec en plus une remise de 10 % sur le sous-total si promoCode vaut "PROMO10"
+    public double computeTotal(Order order, String promoCode) {
+        double s = subtotal(order);
+        double d = 0;
+        if (s >= 100) {
+            d = s * 0.10;
+        }
+        double promo = 0;
+        if ("PROMO10".equals(promoCode)) {
+            promo = s * 0.10;
+        }
+        double r = s - d - promo;
+        double t = 0;
+        if (s > 0) {
+            t = s * 0.20;
+        }
+        double total = r + t;
+        double p = order.getShipping();
+        if (p > 0) {
+            total = total + p;
+        }
+        return total;
+    }
+
     public List<Order> findByUser(long userId) {
         List<Order> result = new ArrayList<Order>();
         List<Order> all = orderRepository.findAll();
